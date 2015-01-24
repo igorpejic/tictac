@@ -13,7 +13,7 @@ char igrac1[15], igrac2[15];
 int bodovi_igrac_1, bodovi_igrac_2;	
 int polje[vel][vel], prvi=1, broj_poteza;
 
-int main(int argc, char **argv)
+int main()
 {
     izbornik();
 
@@ -21,7 +21,7 @@ int main(int argc, char **argv)
 }
 
 void izbornik () {
-    int izbor;
+    int izbor, i, j;
     printf ("~ TIC TAC TOE ~\n");
     printf ("1. Igranje igre\n2. Upis imena igrača\n3. Kraj igre");
     printf ("\nUpisi jedan od prethodno navedenih brojeva: ");
@@ -29,7 +29,12 @@ void izbornik () {
 
     switch(izbor) {
         case 2: upisi_igrace();
-        case 1: system ("clear");pokreni_igru(); break;
+        case 1: system ("clear");
+                for(i=0; i<vel; i++)
+                    for(j=0; j<vel; j++)
+                        polje[i][j]=0;
+                pokreni_igru();
+                break;
         case 3: kraj_igre(); break;
     }
 }
@@ -61,8 +66,8 @@ void pokreni_igru() {
                     case 'b': stupac=1; break;
                     case 'c': stupac=2; break;
                 }
-                if (polje[stupac][red]==0){
-                    polje[stupac][red]=1;
+                if (polje[red][stupac]==0){
+                    polje[red][stupac]=1;
                     br=0;
                     broj_poteza++;
                 }
@@ -87,8 +92,8 @@ void pokreni_igru() {
                 case 'b': stupac=1; break;
                 case 'c': stupac=2; break;
             }
-            if (polje[stupac][red]==0){
-                polje[stupac][red]=2;
+            if (polje[red][stupac]==0){
+                polje[red][stupac]=2;
                 br=1;
                 broj_poteza++;
             }
@@ -105,7 +110,9 @@ void ispis_mape (int broj, int broj2) {
     int i, j, dijagonalno=0, dijagonalno2=0, okomito=0, okomito2=0, okomito3=0, vodoravno=0, vodoravno2=0, vodoravno3=0;
     int d1=0, d2=0, o1=0, o2=0, o3=0, v1=0, v2=0, v3=0, br=0;
     printf ("\n");
+    printf("   a   b   c  \n");
     for (i=0; i<vel; i++) {
+        printf("%d",i+1);
         for (j=0; j<vel; j++) {
             if (polje[i][j]==1) printf ("| X ");
             if (polje[i][j]==2) printf ("| O ");
