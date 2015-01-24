@@ -154,6 +154,7 @@ void ispis_mape (int broj, int broj2) {
         printf ("|\n");
     }
     printf ("\n%d", br); //tu ne ide 1,2,3.. nego samo odjednom skoci na 2 ili 4, a ponekad ide samo po jedan. bo :D
+    // PA NORMALNO DA IDE ZA 2 KADA FUNKCIJA IMITIRA 2 POTEZA, 1 PRVOG i 1 DRUGO IGRACA
     //printf ("\n%d %d", dijagonalno2, d2);
     //printf ("\n%d %d", dijagonalno, d1);
 
