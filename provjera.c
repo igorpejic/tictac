@@ -71,6 +71,7 @@ void pokreni_igru() {
             }
             else if (polje[red][stupac]==0){
                 polje[red][stupac]=1;
+                broj_poteza++;
                 ispis_mape();
                 if(provjera_pobjede() == 1){
                     bodovi_igrac_1++;
@@ -83,6 +84,11 @@ void pokreni_igru() {
                 printf ("Upisite neku koordinatu koja je slobodna");
             }
             ispis_mape();
+        }
+        if(broj_poteza==9){//nema pobjednika
+            printf("Nema pobjednika!\n");
+            izbornik();
+            return;
         }
 
         //DRUGI IGRAČ
@@ -102,6 +108,7 @@ void pokreni_igru() {
                 printf("Upisite neku koordinatu koja postoji\n");
             }
             else if (polje[red][stupac]==0){
+                broj_poteza++;
                 polje[red][stupac]=2;
                 ispis_mape();
                 if(provjera_pobjede() == 2){
@@ -115,9 +122,6 @@ void pokreni_igru() {
                 printf ("Upisite neku koordinatu koja je slobodna");
             }
             ispis_mape();
-            if(broj_poteza==9)
-                printf("Nema pobjednika!\n");
-                return;
         }	
     }
 }
