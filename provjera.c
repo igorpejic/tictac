@@ -54,36 +54,39 @@ void pokreni_igru() {
     ispis_mape();
     while (1) {
         //PRVI IGRAČ
-        while (1) {
-            printf ("\n*igra %s*", igrac1);
-            printf ("\nUpisi koordinatu: (najprije slovo pa broj, npr b2)");
-            scanf (" %c%d", &Stupac, &red);
-            if(isupper(Stupac)) Stupac=tolower(Stupac);
-            system("clear"); //problem je u ovome kod ponovnog upisa koordinate!
-            red=red-1;
-            switch(Stupac) {
-                case 'a': stupac=0; break;
-                case 'b': stupac=1; break;
-                case 'c': stupac=2; break;
-            }
-            if(red >2 || red < 0 || stupac < 0 || stupac>2){
-                printf("Upisite neku koordinatu koja postoji\n");
-            }
-            else if (polje[red][stupac]==0){
-                polje[red][stupac]=1;
-                broj_poteza++;
-                ispis_mape();
-                if(provjera_pobjede() == 1){
-                    bodovi_igrac_1++;
-                    izbornik();
-                    return;
+        if(prvi==1){
+            while (1) {
+                printf ("\n*igra %s*", igrac1);
+                printf ("\nUpisi koordinatu: (najprije slovo pa broj, npr b2)");
+                scanf (" %c%d", &Stupac, &red);
+                if(isupper(Stupac)) Stupac=tolower(Stupac);
+                system("clear"); //problem je u ovome kod ponovnog upisa koordinate!
+                red=red-1;
+                switch(Stupac) {
+                    case 'a': stupac=0; break;
+                    case 'b': stupac=1; break;
+                    case 'c': stupac=2; break;
                 }
-                break;
+                if(red >2 || red < 0 || stupac < 0 || stupac>2){
+                    printf("Upisite neku koordinatu koja postoji\n");
+                }
+                else if (polje[red][stupac]==0){
+                    polje[red][stupac]=1;
+                    broj_poteza++;
+                    ispis_mape();
+                    if(provjera_pobjede() == 1){
+                        bodovi_igrac_1++;
+                        prvi=0;
+                        izbornik();
+                        return;
+                    }
+                    break;
+                }
+                else {
+                    printf ("Upisite neku koordinatu koja je slobodna");
+                }
+                ispis_mape();
             }
-            else {
-                printf ("Upisite neku koordinatu koja je slobodna");
-            }
-            ispis_mape();
         }
         if(broj_poteza==9){//nema pobjednika
             printf("Nema pobjednika!\n");
@@ -93,6 +96,7 @@ void pokreni_igru() {
 
         //DRUGI IGRAČ
         while (1) {
+            prvi = 1;
             printf ("\n*igra %s*", igrac2);
             printf ("\nUpisi koordinatu: (najprije slovo pa broj, npr b2) ");
             scanf (" %c%d", &Stupac, &red);
@@ -113,6 +117,7 @@ void pokreni_igru() {
                 ispis_mape();
                 if(provjera_pobjede() == 2){
                     bodovi_igrac_2++;
+                    prvi =1;
                     izbornik();
                     return;
                 }
