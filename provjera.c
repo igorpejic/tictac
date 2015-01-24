@@ -1,7 +1,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <ctype.h>
-#define vel 3
+#define VEL 3
+//defineovi uvijek velikim slovima
 
 void izbornik();
 void upisi_igrace();
@@ -10,11 +11,11 @@ void kraj_igre();
 void ispis_mape();
 int provjera_pobjede(); //vraca 0 ako nije zavrseno, 1 ako je 1. pobjedio, 2 ako drugi
 int provjera_nitko_ne_pobjeduje(int turn);
-int provjera_pobjede_hipotetski(int polje[][vel]);
+int provjera_pobjede_hipotetski(int polje[][VEL]);
 
 char igrac1[15], igrac2[15];
 int bodovi_igrac_1, bodovi_igrac_2;	
-int polje[vel][vel], prvi=1, broj_poteza;
+int polje[VEL][VEL], prvi=1, broj_poteza;
 
 int main()
 {
@@ -26,17 +27,17 @@ int main()
 /*funkcija vraca 1 ako nitko ne moze pobjediti, 0 ako se moze pobjediti*/
 /*turn = 1 za provjeru samo kruzica */
 int provjera_nitko_ne_pobjeduje(int turn){
-    int probno_polje[vel][vel];
+    int probno_polje[VEL][VEL];
     int i, j;
     if(turn !=1){
-        for(i = 0; i < vel; i++){
-            for(j = 0; j < vel; j++){
+        for(i = 0; i < VEL; i++){
+            for(j = 0; j < VEL; j++){
                 probno_polje[i][j] = polje[i][j];
             }
         }
         /*provjera za prvog */
-        for(i = 0; i < vel; i++){
-            for(j = 0; j < vel; j++){
+        for(i = 0; i < VEL; i++){
+            for(j = 0; j < VEL; j++){
                 if(probno_polje[i][j] == 0)
                     probno_polje[i][j] = 1;
             }
@@ -45,13 +46,13 @@ int provjera_nitko_ne_pobjeduje(int turn){
             return 0;
     }
 
-    for(i = 0; i < vel; i++){
-        for(j = 0; j < vel; j++){
+    for(i = 0; i < VEL; i++){
+        for(j = 0; j < VEL; j++){
             probno_polje[i][j] = polje[i][j];
         }
     }
-    for(i = 0; i < vel; i++){
-        for(j = 0; j < vel; j++){
+    for(i = 0; i < VEL; i++){
+        for(j = 0; j < VEL; j++){
             if(probno_polje[i][j] == 0)
                 probno_polje[i][j] = 2;
         }
@@ -60,7 +61,7 @@ int provjera_nitko_ne_pobjeduje(int turn){
         return 0;
     return 1;
 }
-int provjera_pobjede_hipotetski(int ppolje[][vel]){
+int provjera_pobjede_hipotetski(int ppolje[][VEL]){
     /* provjerava redove */
     if(ppolje[0][0]==1 && ppolje[0][1]==1 && ppolje[0][2] ==1)
         return 1; //pobjedio je prvi igrac
@@ -118,8 +119,8 @@ void izbornik () {
     switch(izbor) {
         case 2: upisi_igrace();
         case 1: system ("clear");
-                for(i=0; i<vel; i++)
-                    for(j=0; j<vel; j++)
+                for(i=0; i<VEL; i++)
+                    for(j=0; j<VEL; j++)
                         polje[i][j]=0;
                 broj_poteza=0;
                 pokreni_igru();
@@ -281,9 +282,9 @@ void ispis_mape () {
     int i, j;
     printf ("\n");
     printf("   a   b   c  \n");
-    for (i=0; i<vel; i++) {
+    for (i=0; i<VEL; i++) {
         printf("%d",i+1);
-        for (j=0; j<vel; j++) {
+        for (j=0; j<VEL; j++) {
             if (polje[i][j]==1) printf ("| X ");
             if (polje[i][j]==2) printf ("| O ");
             if (polje[i][j]==0) printf ("| . ");
