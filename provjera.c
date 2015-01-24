@@ -142,7 +142,7 @@ void pokreni_igru() {
     ispis_mape();
     while (1) {
         if(provjera_nitko_ne_pobjeduje(0) == 1){
-            printf("Nitko ne moze pobjediti iako ima slobonih polja.\n");
+            printf("Nitko ne moze pobjediti, iako ima slobodnih polja.\n");
             izbornik();
             return;
         }
@@ -182,7 +182,7 @@ void pokreni_igru() {
             }
         }
         if(provjera_nitko_ne_pobjeduje(1) == 1){
-            printf("Nitko ne moze pobjediti iako ima slobonih polja.\n");
+            printf("Nitko ne moze pobjediti, iako ima slobodnih polja.\n");
             izbornik();
             return;
         }
