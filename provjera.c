@@ -114,13 +114,11 @@ void ispis_mape (int broj, int broj2) {
                 if (polje[i][j]==broj) dijagonalno++;
                 if (polje[i][j]==broj2) d1++;
                 if (((dijagonalno>=1) && (d1>=1)) || ((d1==2) && broj_poteza==7)) br++; //ovo tu pa na dalje isto ti if-ovi ne znam zasto nisu dobri
-                printf ("%d", br);
             }
             if (i+j==vel-1) {
                 if (polje[i][j]==broj) dijagonalno2++;
                 if (polje[i][j]==broj2) d2++;
                 if (((dijagonalno2>=1) && (d2>=1)) || ((d2==2)  && broj_poteza==7)) br++;
-                printf ("%d", br);
             }
             if (i==0) {
                 if (polje[i][j]==broj) vodoravno++;
