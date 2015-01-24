@@ -9,6 +9,8 @@ void pokreni_igru();
 void kraj_igre();
 void ispis_mape();
 int provjera_pobjede(); //vraca 0 ako nije zavrseno, 1 ako je 1. pobjedio, 2 ako drugi
+int provjera_nitko_ne_pobjeduje(int turn);
+int provjera_pobjede_hipotetski(int polje[][vel]);
 
 char igrac1[15], igrac2[15];
 int bodovi_igrac_1, bodovi_igrac_2;	
@@ -19,6 +21,91 @@ int main()
     izbornik();
 
     return 0;
+}
+
+/*funkcija vraca 1 ako nitko ne moze pobjediti, 0 ako se moze pobjediti*/
+/*turn = 1 za provjeru samo kruzica */
+int provjera_nitko_ne_pobjeduje(int turn){
+    int probno_polje[vel][vel];
+    int i, j;
+    if(turn !=1){
+        for(i = 0; i < vel; i++){
+            for(j = 0; j < vel; j++){
+                probno_polje[i][j] = polje[i][j];
+            }
+        }
+        /*provjera za prvog */
+        for(i = 0; i < vel; i++){
+            for(j = 0; j < vel; j++){
+                if(probno_polje[i][j] == 0)
+                    probno_polje[i][j] = 1;
+            }
+        }
+        if(provjera_pobjede_hipotetski(probno_polje)==1)
+            return 0;
+    }
+
+    for(i = 0; i < vel; i++){
+        for(j = 0; j < vel; j++){
+            probno_polje[i][j] = polje[i][j];
+        }
+    }
+    for(i = 0; i < vel; i++){
+        for(j = 0; j < vel; j++){
+            if(probno_polje[i][j] == 0)
+                probno_polje[i][j] = 2;
+        }
+    }
+    if(provjera_pobjede_hipotetski(probno_polje)==2)
+        return 0;
+    return 1;
+}
+int provjera_pobjede_hipotetski(int ppolje[][vel]){
+    /* provjerava redove */
+    if(ppolje[0][0]==1 && ppolje[0][1]==1 && ppolje[0][2] ==1)
+        return 1; //pobjedio je prvi igrac
+    if(ppolje[1][0]==1 && ppolje[1][1]==1 && ppolje[1][2] ==1)
+        return 1; //pobjedio je prvi igrac
+    if(ppolje[2][0]==1 && ppolje[2][1]==1 && ppolje[2][2] ==1)
+        return 1; //pobjedio je prvi igrac
+
+    /* provjerava stupce */
+    if(ppolje[0][0]==1 && ppolje[1][0]==1 && ppolje[2][0] ==1)
+        return 1; //pobjedio je prvi igrac
+    if(ppolje[0][1]==1 && ppolje[1][1]==1 && ppolje[2][1] ==1)
+        return 1; //pobjedio je prvi igrac
+    if(ppolje[0][2]==1 && ppolje[1][2]==1 && ppolje[2][2] ==1)
+        return 1; //pobjedio je prvi igrac
+
+    /* provjerava dijagonale */
+    if(ppolje[0][0]==1 && ppolje[1][1]==1 && ppolje[2][2] ==1)
+        return 1; //pobjedio je prvi igrac
+    if(ppolje[2][0]==1 && ppolje[1][1]==1 && ppolje[0][2] ==1)
+        return 1; //pobjedio je prvi igrac
+
+    /* DRUGI IGRAC */
+    /* provjerava redove */
+    if(ppolje[0][0]==2 && ppolje[0][1]==2 && ppolje[0][2] ==2)
+        return 2; //pobjedio je drugi igrac
+    if(ppolje[1][0]==2 && ppolje[1][1]==2 && ppolje[1][2] ==2)
+        return 2; //pobjedio je drugi igrac
+    if(ppolje[2][0]==2 && ppolje[2][1]==2 && ppolje[2][2] ==2)
+        return 2; //pobjedio je drugi igrac
+
+    /* provjerava stupce */
+    if(ppolje[0][0]==2 && ppolje[1][0]==2 && ppolje[2][0] ==2)
+        return 2; //pobjedio je drugi igrac
+    if(ppolje[0][1]==2 && ppolje[1][1]==2 && ppolje[2][1] ==2)
+        return 2; //pobjedio je drugi igrac
+    if(ppolje[0][2]==2 && ppolje[1][2]==2 && ppolje[2][2] ==2)
+        return 2; //pobjedio je drugi igrac
+
+    /* provjerava dijagonale */
+    if(ppolje[0][0]==2 && ppolje[1][1]==2 && ppolje[2][2] ==2)
+        return 2; //pobjedio je drugi igrac
+    if(ppolje[2][0]==2 && ppolje[1][1]==2 && ppolje[0][2] ==2)
+        return 2; //pobjedio je drugi igrac
+    return 0;//nema pobjedinka jos
 }
 
 void izbornik () {
@@ -53,6 +140,11 @@ void pokreni_igru() {
     char Stupac;
     ispis_mape();
     while (1) {
+        if(provjera_nitko_ne_pobjeduje(0) == 1){
+            printf("Nitko ne moze pobjediti iako ima slobonih polja.\n");
+            izbornik();
+            return;
+        }
         //PRVI IGRAČ
         if(prvi==1){
             while (1) {
@@ -87,6 +179,11 @@ void pokreni_igru() {
                 }
                 ispis_mape();
             }
+        }
+        if(provjera_nitko_ne_pobjeduje(1) == 1){
+            printf("Nitko ne moze pobjediti iako ima slobonih polja.\n");
+            izbornik();
+            return;
         }
         if(broj_poteza==9){//nema pobjednika
             printf("Nema pobjednika!\n");
