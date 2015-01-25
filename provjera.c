@@ -10,7 +10,7 @@ void pokreni_igru();
 void kraj_igre();
 void ispis_mape();
 int provjera_pobjede(); //vraca 0 ako nije zavrseno, 1 ako je 1. pobjedio, 2 ako drugi
-int provjera_nitko_ne_pobjeduje(int turn);
+int provjera_nitko_ne_pobjeduje();
 int provjera_pobjede_hipotetski(int polje[][VEL]);
 
 char igrac1[15], igrac2[15];
@@ -26,10 +26,11 @@ int main()
 
 /*funkcija vraca 1 ako nitko ne moze pobjediti, 0 ako se moze pobjediti*/
 /*turn = 1 za provjeru samo kruzica */
-int provjera_nitko_ne_pobjeduje(int turn){
+int provjera_nitko_ne_pobjeduje(){
     int probno_polje[VEL][VEL];
     int i, j;
-    if(turn !=1){
+    int val1=0;
+    int val2=0;
         for(i = 0; i < VEL; i++){
             for(j = 0; j < VEL; j++){
                 probno_polje[i][j] = polje[i][j];
@@ -43,8 +44,7 @@ int provjera_nitko_ne_pobjeduje(int turn){
             }
         }
         if(provjera_pobjede_hipotetski(probno_polje)==1)
-            return 0;
-    }
+            val1=1;
 
     for(i = 0; i < VEL; i++){
         for(j = 0; j < VEL; j++){
@@ -58,6 +58,8 @@ int provjera_nitko_ne_pobjeduje(int turn){
         }
     }
     if(provjera_pobjede_hipotetski(probno_polje)==2)
+        val2=1;
+    if(val2||val1)
         return 0;
     return 1;
 }
@@ -141,7 +143,7 @@ void pokreni_igru() {
     char Stupac;
     ispis_mape();
     while (1) {
-        if(provjera_nitko_ne_pobjeduje(0) == 1){
+        if(provjera_nitko_ne_pobjeduje() == 1){
             printf("Nitko ne moze pobjediti, iako ima slobodnih polja.\n");
             izbornik();
             return;
@@ -181,7 +183,7 @@ void pokreni_igru() {
                 ispis_mape();
             }
         }
-        if(provjera_nitko_ne_pobjeduje(1) == 1){
+        if(provjera_nitko_ne_pobjeduje() == 1){
             printf("Nitko ne moze pobjediti, iako ima slobodnih polja.\n");
             izbornik();
             return;
